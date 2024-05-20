@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon"
+		  href="{{ url_for('static', filename='img/favicon.png') }}">
+	<title>Все новости</title>
+</head>
+<body>
+<a href="/add-story">Добавить новую историю</a>
+{% for story in stories %}
+	<div>
+		<h3>{{story.title}}</h3>
+		<p>{{story.content}}</p>
+		<p style="font-family: monospace;">
+                    Темы:
+                        {% for category in story.categories %}
+                        <span style="color: white; background-color: #{{category.color}}; padding: 2px;">{{category.name}}</span>
+                        {% endfor %}
+                </p>
+		<p>
+			<b>Автор:</b> {{story.author.first_name + ' ' + story.author.last_name}}
+			<br><i>Создано:</i> {{story.created_on}}
+			{% if story.updated_on != None %}
+				<br><i>Изменено:</i> {{story.updated_on}}
+			{% endif %}
+		</p>
+		<p>
+			<a href="/edit-story/{{ story.id }}">Изменить</a>
+			<a href="/delete-story/{{ story.id }}">Удалить</a>
+		</p>
+	</div>
+{% endfor %}
+</body>
+</html>

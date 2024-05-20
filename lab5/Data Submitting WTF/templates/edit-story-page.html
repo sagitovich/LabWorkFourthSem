@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Наша форма</title>
+	<link rel="icon" type="image/x-icon"
+		  href="{{ url_for('static', filename='img/favicon.png') }}">
+</head>
+<body>
+
+<h1>Добавление новой новости</h1>
+<p>Введите название, содержание и другие параметры новой новости и нажмите кнопку <b>В добрый путь!</b>.</p>
+
+<form action="/edit-story/{{ story_id }}" method="post" enctype="multipart/form-data">
+	{{ f.story_title.label }} {{ f.story_title() }}
+	{% for error in f.story_title.errors %}
+	<p style="font-family: monospace; color: red; margin: 4px;">{{ error }}</p>
+	{% endfor %}
+	<br><br>
+
+	{{ f.story_content.label }} <br>
+	{{ f.story_content() }}
+	{% for error in f.story_content.errors %}
+	<p style="font-family: monospace; color: red; margin: 4px;">{{ error }}</p>
+	{% endfor %}
+
+	<br><br>
+
+	{{ f.story_author.label }} {{ f.story_author() }}
+	{% for error in f.story_author.errors %}
+	<p style="font-family: monospace; color: red; margin: 4px;">{{ error }}</p>
+	{% endfor %}
+
+	<br><br>
+
+	<fieldset>
+		<legend>{{ f.scope.label.text }}</legend>
+		{% for subfield in f.scope %}
+		{{ subfield }} {{ subfield.label }} <br>
+		{% endfor %}
+	</fieldset>
+	{% for error in f.scope.errors %}
+	<p style="font-family: monospace; color: red; margin: 4px;">{{ error }}</p>
+	{% endfor %}
+
+
+	<br>
+
+	{{ f.creation_date.label }} {{f.creation_date() }}
+	{% for error in f.creation_date.errors %}
+	<p style="font-family: monospace; color: red; margin: 4px;">{{ error }}</p>
+	{% endfor %}
+
+
+	<br><br>
+
+	<fieldset>
+		<legend>{{ f.story_topics.label }}</legend>
+		{{ f.story_topics() }}
+	</fieldset>
+
+	<br><br>
+
+	{{ f.severity.label }} {{ f.severity() }}
+
+	<br><br>
+
+	{{ f.responsibility() }}
+	{{ f.responsibility.label }} <br>
+
+	<br>
+
+	<input type="submit" value="В добрый путь!"> <input type="reset" value="Очистить форму">
+</form>
+
+</body>
+</html>
